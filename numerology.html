@@ -34,17 +34,39 @@
         <p class="text-center text-gray-600 mb-8">Discover the deeper meaning behind your name and date of birth.</p>
 
         <!-- Form for user input -->
-        <form id="numerology-form" class="space-y-6">
-            <div>
-                <label for="name" class="block text-sm font-medium text-gray-700">Your Full Name</label>
-                <input type="text" id="name" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="e.g., Jane Doe">
+        <form id="numerology-form" class="space-y-8">
+            <!-- User's Information -->
+            <div class="bg-purple-50 p-6 rounded-2xl border border-purple-200">
+                <h2 class="text-2xl font-bold text-purple-700 mb-4">Your Information</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Your Full Name</label>
+                        <input type="text" id="name" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="e.g., Jane Doe">
+                    </div>
+                    <div>
+                        <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                        <input type="date" id="dob" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 transition duration-300">
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
-                <input type="date" id="dob" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 transition duration-300">
+
+            <!-- Partner's Information -->
+            <div class="bg-pink-50 p-6 rounded-2xl border border-pink-200">
+                <h2 class="text-2xl font-bold text-pink-700 mb-4">Partner's Information (Optional)</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="partner-name" class="block text-sm font-medium text-gray-700">Partner's Full Name</label>
+                        <input type="text" id="partner-name" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="e.g., John Smith">
+                    </div>
+                    <div>
+                        <label for="partner-dob" class="block text-sm font-medium text-gray-700">Partner's Date of Birth</label>
+                        <input type="date" id="partner-dob" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-pink-500 focus:border-pink-500 transition duration-300">
+                    </div>
+                </div>
             </div>
+
             <button type="submit" id="submit-btn" class="w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out transform hover:scale-105">
-                Get My Reading
+                Get My Complete Reading
             </button>
         </form>
 
@@ -52,47 +74,110 @@
         <div id="loading" class="hidden text-center mt-8">
             <div class="flex flex-col items-center">
                 <i class="fas fa-spinner fa-spin text-purple-600 text-4xl mb-4 animate-spin-slow"></i>
-                <p class="text-gray-600 font-semibold text-lg">Generating your reading, please wait...</p>
+                <p class="text-gray-600 font-semibold text-lg">Generating your complete reading, please wait...</p>
             </div>
         </div>
 
         <!-- Result display section -->
-        <div id="result" class="hidden mt-8">
+        <div id="result" class="hidden mt-8 space-y-6">
             <div class="bg-purple-50 p-6 rounded-2xl shadow-inner border border-purple-200">
                 <h2 id="result-title" class="text-3xl font-bold text-purple-700 mb-2"></h2>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
-                        Life Path: <span id="life-path-number" class="font-bold ml-1"></span>
-                    </span>
-                    <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
-                        Expression: <span id="expression-number" class="font-bold ml-1"></span>
-                    </span>
-                    <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
-                        Soul Urge: <span id="soul-urge-number" class="font-bold ml-1"></span>
-                    </span>
+                
+                <!-- Your Numbers -->
+                <div id="main-numbers-section" class="mb-4">
+                    <p class="text-xl font-semibold text-purple-600">Your Numbers</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            Life Path: <span id="life-path-number" class="font-bold ml-1"></span>
+                        </span>
+                        <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            Expression: <span id="expression-number" class="font-bold ml-1"></span>
+                        </span>
+                        <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            Soul Urge: <span id="soul-urge-number" class="font-bold ml-1"></span>
+                        </span>
+                    </div>
                 </div>
-                <!-- Section for special number insights -->
-                <div id="special-number-insights" class="hidden bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg mb-4">
-                    <p class="font-bold">Special Numerology Insights:</p>
-                    <p id="special-number-text" class="italic"></p>
+                
+                <!-- Partner's Numbers (conditional display) -->
+                <div id="partner-numbers-section" class="mb-4 hidden">
+                    <p class="text-xl font-semibold text-pink-600">Partner's Numbers</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-block bg-pink-200 text-pink-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            Life Path: <span id="partner-life-path-number" class="font-bold ml-1"></span>
+                        </span>
+                        <span class="inline-block bg-pink-200 text-pink-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            Expression: <span id="partner-expression-number" class="font-bold ml-1"></span>
+                        </span>
+                        <span class="inline-block bg-pink-200 text-pink-800 text-sm font-semibold px-3 py-1 rounded-full">
+                            Soul Urge: <span id="partner-soul-urge-number" class="font-bold ml-1"></span>
+                        </span>
+                    </div>
                 </div>
-                <p id="result-summary" class="text-gray-800 text-lg mb-4"></p>
-                <p id="result-description" class="text-gray-600 mb-6"></p>
-                <div id="affirmation-box" class="bg-purple-100 border-l-4 border-purple-500 text-purple-800 p-4 rounded-lg">
-                    <p class="font-bold">Affirmation:</p>
-                    <p id="result-affirmation" class="italic"></p>
+
+                <!-- Main Reading Section -->
+                <div id="main-reading-content" class="bg-white p-4 rounded-xl shadow-md mb-4">
+                    <h3 id="main-reading-title" class="text-2xl font-semibold text-purple-700 mb-2"></h3>
+                    <!-- Section for special number insights -->
+                    <div id="special-number-insights" class="hidden bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg mb-4">
+                        <p class="font-bold">Special Numerology Insights:</p>
+                        <p id="special-number-text" class="italic"></p>
+                    </div>
+                    <p id="result-summary" class="text-gray-800 text-lg mb-4"></p>
+                    <p id="result-description" class="text-gray-600 mb-6"></p>
+                    <div id="affirmation-box" class="bg-purple-100 border-l-4 border-purple-500 text-purple-800 p-4 rounded-lg">
+                        <p class="font-bold">Affirmation:</p>
+                        <p id="result-affirmation" class="italic"></p>
+                    </div>
                 </div>
-                <div class="mt-6 flex flex-col sm:flex-row gap-4">
-                    <button id="listen-btn" class="flex-1 flex items-center justify-center bg-purple-600 text-white font-bold py-3 px-4 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out transform hover:scale-105">
-                        <i class="fas fa-play mr-2"></i> Listen to Reading
-                    </button>
-                    <button id="reset-btn" class="flex-1 flex items-center justify-center bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-full shadow-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-300 ease-in-out transform hover:scale-105">
-                        <i class="fas fa-redo mr-2"></i> New Reading
-                    </button>
+            </div>
+
+            <!-- Compatibility Reading Section (conditional display) -->
+            <div id="compatibility-section" class="hidden bg-pink-100 p-4 rounded-xl shadow-md">
+                <h3 id="compatibility-title" class="text-2xl font-semibold text-pink-700 mb-2"></h3>
+                <p id="compatibility-description" class="text-gray-600"></p>
+            </div>
+            
+            <!-- Daily Reading Section -->
+            <div id="daily-reading-content" class="hidden bg-indigo-100 p-4 rounded-xl shadow-md">
+                <h3 id="daily-reading-title" class="text-2xl font-semibold text-indigo-700 mb-2"></h3>
+                <p class="text-xl font-semibold text-indigo-600">Your Daily Number: <span id="daily-number" class="font-bold"></span></p>
+                <p id="daily-reading-description" class="text-gray-600 mt-2"></p>
+                <div id="daily-affirmation-box" class="bg-indigo-200 border-l-4 border-indigo-500 text-indigo-800 p-4 rounded-lg mt-4">
+                    <p class="font-bold">Affirmation for the Day:</p>
+                    <p id="daily-affirmation" class="italic"></p>
                 </div>
-                <div id="audio-container" class="mt-4 hidden">
-                    <audio id="audio-player" controls class="w-full"></audio>
+            </div>
+
+            <!-- Yearly Forecast Section -->
+            <div id="yearly-forecast-content" class="hidden bg-pink-100 p-4 rounded-xl shadow-md">
+                <h3 id="yearly-forecast-title" class="text-2xl font-semibold text-pink-700 mb-2"></h3>
+                <p class="text-xl font-semibold text-pink-600">Your Yearly Number: <span id="yearly-number" class="font-bold"></span></p>
+                <p id="yearly-forecast-description" class="text-gray-600 mt-2"></p>
+                <div id="yearly-affirmation-box" class="bg-pink-200 border-l-4 border-pink-500 text-pink-800 p-4 rounded-lg mt-4">
+                    <p class="font-bold">Affirmation for the Year:</p>
+                    <p id="yearly-affirmation" class="italic"></p>
                 </div>
+            </div>
+            
+            <!-- Pinnacle Reading Section -->
+            <div id="pinnacle-reading-content" class="hidden bg-yellow-100 p-4 rounded-xl shadow-md">
+                <h3 id="pinnacle-reading-title" class="text-2xl font-semibold text-yellow-700 mb-2"></h3>
+                <div id="pinnacle-readings-container" class="grid md:grid-cols-2 gap-4 mt-4">
+                    <!-- Pinnacle cards will be dynamically added here -->
+                </div>
+            </div>
+
+            <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                <button id="listen-btn" class="flex-1 flex items-center justify-center bg-purple-600 text-white font-bold py-3 px-4 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-play mr-2"></i> Listen to Reading
+                </button>
+                <button id="reset-btn" class="flex-1 flex items-center justify-center bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-full shadow-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-redo mr-2"></i> New Reading
+                </button>
+            </div>
+            <div id="audio-container" class="mt-4 hidden">
+                <audio id="audio-player" controls class="w-full"></audio>
             </div>
         </div>
 
@@ -163,6 +248,7 @@
 
         // Function to calculate the Life Path Number and check for special numbers
         const calculateLifePathNumber = (dobString) => {
+            if (!dobString) return { number: null, special: null };
             const [year, month, day] = dobString.split('-').map(Number);
             const monthSum = month;
             const daySum = day;
@@ -189,6 +275,7 @@
 
         // Function to calculate the Expression Number and check for special numbers
         const calculateExpressionNumber = (name) => {
+            if (!name) return { number: null, special: null };
             let sum = 0;
             const cleanName = name.toUpperCase().replace(/[^A-Z]/g, '');
             for (const letter of cleanName) {
@@ -202,6 +289,7 @@
 
         // Function to calculate the Soul Urge Number and check for special numbers
         const calculateSoulUrgeNumber = (name) => {
+            if (!name) return { number: null, special: null };
             let sum = 0;
             const vowels = ['A', 'E', 'I', 'O', 'U'];
             const cleanName = name.toUpperCase().replace(/[^A-Z]/g, '');
@@ -216,6 +304,64 @@
                 special: checkSpecialNumber(sum)
             };
         };
+        
+        // Function to calculate the Daily Number
+        const calculateDailyNumber = (dobString) => {
+            if (!dobString) return null;
+            const today = new Date();
+            const todayMonth = today.getMonth() + 1;
+            const todayDay = today.getDate();
+            const [year, month, day] = dobString.split('-').map(Number);
+            
+            const dobMonthDaySum = reduceNumber(month) + reduceNumber(day);
+            const todayMonthDaySum = reduceNumber(todayMonth) + reduceNumber(todayDay);
+            
+            const dailyNumberSum = reduceNumber(dobMonthDaySum) + reduceNumber(todayMonthDaySum);
+            return reduceNumber(dailyNumberSum);
+        };
+        
+        // Function to calculate the Yearly Number (Personal Year)
+        const calculateYearlyNumber = (dobString) => {
+            if (!dobString) return null;
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const [year, month, day] = dobString.split('-').map(Number);
+
+            const dobMonthDaySum = reduceNumber(month) + reduceNumber(day);
+            const currentYearSum = reduceNumber(currentYear);
+            
+            const yearlyNumberSum = reduceNumber(dobMonthDaySum) + reduceNumber(currentYearSum);
+            return reduceNumber(yearlyNumberSum);
+        };
+
+        // New function to calculate the four Pinnacle numbers and their age ranges
+        const calculatePinnacleNumbers = (dobString) => {
+            if (!dobString) return null;
+            const [year, month, day] = dobString.split('-').map(Number);
+            
+            const monthSum = reduceNumber(month);
+            const daySum = reduceNumber(day);
+            const yearSum = reduceNumber(year);
+            const lifePathNumber = calculateLifePathNumber(dobString).number;
+            
+            const pinnacle1 = reduceNumber(monthSum + daySum);
+            const pinnacle2 = reduceNumber(daySum + yearSum);
+            const pinnacle3 = reduceNumber(pinnacle1 + pinnacle2);
+            const pinnacle4 = reduceNumber(monthSum + yearSum);
+            
+            const age1 = 36 - lifePathNumber;
+            const age2 = age1 + 9;
+            const age3 = age2 + 9;
+            const age4 = age3 + 9;
+            
+            return [
+                { number: pinnacle1, age_range: `Birth to ${age1}` },
+                { number: pinnacle2, age_range: `${age1 + 1} to ${age2}` },
+                { number: pinnacle3, age_range: `${age2 + 1} to ${age3}` },
+                { number: pinnacle4, age_range: `${age3 + 1} onwards` }
+            ];
+        };
+
 
         // Base64 to ArrayBuffer helper function
         function base64ToArrayBuffer(base64) {
@@ -336,128 +482,24 @@
             }
         }
 
-
-        document.getElementById('numerology-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const dob = document.getElementById('dob').value;
-            const form = document.getElementById('numerology-form');
-            const loading = document.getElementById('loading');
-            const resultDiv = document.getElementById('result');
-
-            if (!name || !dob) {
-                showError("Please enter your full name and date of birth.");
-                return;
-            }
-
-            // Hide form, show loading
-            form.classList.add('hidden');
-            loading.classList.remove('hidden');
-            resultDiv.classList.add('hidden');
-
+        // Function to fetch the main numerology reading
+        async function fetchMainReading(name, dob, partnerName, partnerDob) {
             try {
-                const lifePath = calculateLifePathNumber(dob);
-                const expression = calculateExpressionNumber(name);
-                const soulUrge = calculateSoulUrgeNumber(name);
+                const userLifePath = calculateLifePathNumber(dob);
+                const userExpression = calculateExpressionNumber(name);
+                const userSoulUrge = calculateSoulUrgeNumber(name);
                 
-                // Construct a detailed prompt for the Gemini API
+                let partnerLifePath = { number: null, special: null };
+                let partnerExpression = { number: null, special: null };
+                let partnerSoulUrge = { number: null, special: null };
+                let hasPartner = false;
+                
+                if (partnerName && partnerDob) {
+                    partnerLifePath = calculateLifePathNumber(partnerDob);
+                    partnerExpression = calculateExpressionNumber(partnerName);
+                    partnerSoulUrge = calculateSoulUrgeNumber(partnerName);
+                    hasPartner = true;
+                }
+                
                 let specialNumberPrompt = '';
-                const specialNumbers = [lifePath.special, expression.special, soulUrge.special].filter(Boolean);
-                if (specialNumbers.length > 0) {
-                    specialNumberPrompt = `The reading should also provide a special, in-depth analysis of the following numbers and their impact: ${specialNumbers.join(', ')}.`;
-                }
-
-                const prompt = `You are a numerology expert. Provide a detailed numerology reading for a person named ${name}, with a Life Path Number of ${lifePath.number}, an Expression Number of ${expression.number}, and a Soul Urge Number of ${soulUrge.number}. The response should be a JSON object with the following schema: { 'title': string, 'summary': string, 'special_number_text': string, 'description': string, 'affirmation': string }. The title should include a personalized greeting like 'Your Personal Numerology Reading, Jane Doe' etc. ${specialNumberPrompt}`;
-
-                const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = {
-                    contents: chatHistory,
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: {
-                                "title": { "type": "STRING" },
-                                "summary": { "type": "STRING" },
-                                "special_number_text": { "type": "STRING" },
-                                "description": { "type": "STRING" },
-                                "affirmation": { "type": "STRING" }
-                            },
-                            "propertyOrdering": ["title", "summary", "special_number_text", "description", "affirmation"]
-                        }
-                    }
-                };
-                
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                const result = await response.json();
-                
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const jsonString = result.candidates[0].content.parts[0].text;
-                    const numerologyData = JSON.parse(jsonString);
-
-                    // Update the result div with the reading
-                    document.getElementById('life-path-number').textContent = lifePath.number;
-                    document.getElementById('expression-number').textContent = expression.number;
-                    document.getElementById('soul-urge-number').textContent = soulUrge.number;
-                    document.getElementById('result-title').textContent = numerologyData.title || "Your Reading";
-                    document.getElementById('result-summary').textContent = numerologyData.summary || "No summary provided.";
-                    document.getElementById('result-description').textContent = numerologyData.description || "No description provided.";
-                    document.getElementById('result-affirmation').textContent = numerologyData.affirmation || "No affirmation provided.";
-
-                    // Handle special number insights
-                    const specialNumberInsightsDiv = document.getElementById('special-number-insights');
-                    const specialNumberText = document.getElementById('special-number-text');
-                    if (numerologyData.special_number_text) {
-                        specialNumberInsightsDiv.classList.remove('hidden');
-                        specialNumberText.textContent = numerologyData.special_number_text;
-                    } else {
-                        specialNumberInsightsDiv.classList.add('hidden');
-                    }
-
-                    // Attach listener to the listen button
-                    document.getElementById('listen-btn').onclick = () => {
-                        const readingText = `Your Life Path Number is ${lifePath.number}, Expression Number is ${expression.number}, and Soul Urge Number is ${soulUrge.number}. ${numerologyData.title}. ${numerologyData.summary}. ${numerologyData.special_number_text ? numerologyData.special_number_text : ''} ${numerologyData.description}. ${numerologyData.affirmation}.`;
-                        playAudio(readingText);
-                    };
-
-                    loading.classList.add('hidden');
-                    resultDiv.classList.remove('hidden');
-
-                } else {
-                    throw new Error("Failed to get a valid response from the API.");
-                }
-
-            } catch (error) {
-                console.error("Error fetching numerology reading:", error);
-                loading.classList.add('hidden');
-                form.classList.remove('hidden');
-                showError("Oops! Something went wrong. Please check your input and try again.");
-            }
-        });
-
-        // Event listener for the "New Reading" button
-        document.getElementById('reset-btn').addEventListener('click', () => {
-            document.getElementById('numerology-form').classList.remove('hidden');
-            document.getElementById('result').classList.add('hidden');
-            document.getElementById('name').value = '';
-            document.getElementById('dob').value = '';
-            const audioPlayer = document.getElementById('audio-player');
-            const audioContainer = document.getElementById('audio-container');
-            audioPlayer.pause();
-            audioPlayer.src = '';
-            audioContainer.classList.add('hidden');
-        });
-    </script>
-</body>
-</html>
+                const specialNumbers = [userLifePath.special, userExpression.special, userSoulU
