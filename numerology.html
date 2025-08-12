@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numerology Reading</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .animate-spin-slow {
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main Container -->
+    <div class="bg-white bg-opacity-90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 max-w-2xl w-full mx-auto transform transition-all duration-500 ease-in-out">
+        
+        <h1 class="text-4xl md:text-5xl font-bold text-center text-purple-800 mb-6 drop-shadow-md">Your Numerology Reading</h1>
+        <p class="text-center text-gray-600 mb-8">Discover the deeper meaning behind your name and date of birth.</p>
+
+        <!-- Form for user input -->
+        <form id="numerology-form" class="space-y-6">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Your Full Name</label>
+                <input type="text" id="name" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 transition duration-300" placeholder="e.g., Jane Doe">
+            </div>
+            <div>
+                <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                <input type="date" id="dob" class="mt-1 block w-full rounded-full border-gray-300 shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 transition duration-300">
+            </div>
+            <button type="submit" id="submit-btn" class="w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out transform hover:scale-105">
+                Get My Reading
+            </button>
+        </form>
+
+        <!-- Loading state -->
+        <div id="loading" class="hidden text-center mt-8">
+            <div class="flex flex-col items-center">
+                <i class="fas fa-spinner fa-spin text-purple-600 text-4xl mb-4 animate-spin-slow"></i>
+                <p class="text-gray-600 font-semibold text-lg">Generating your reading, please wait...</p>
+            </div>
+        </div>
+
+        <!-- Result display section -->
+        <div id="result" class="hidden mt-8">
+            <div class="bg-purple-50 p-6 rounded-2xl shadow-inner border border-purple-200">
+                <h2 id="result-title" class="text-3xl font-bold text-purple-700 mb-2"></h2>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
+                        Life Path: <span id="life-path-number" class="font-bold ml-1"></span>
+                    </span>
+                    <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
+                        Expression: <span id="expression-number" class="font-bold ml-1"></span>
+                    </span>
+                    <span class="inline-block bg-purple-200 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full">
+                        Soul Urge: <span id="soul-urge-number" class="font-bold ml-1"></span>
+                    </span>
+                </div>
+                <!-- Section for special number insights -->
+                <div id="special-number-insights" class="hidden bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg mb-4">
+                    <p class="font-bold">Special Numerology Insights:</p>
+                    <p id="special-number-text" class="italic"></p>
+                </div>
+                <p id="result-summary" class="text-gray-800 text-lg mb-4"></p>
+                <p id="result-description" class="text-gray-600 mb-6"></p>
+                <div id="affirmation-box" class="bg-purple-100 border-l-4 border-purple-500 text-purple-800 p-4 rounded-lg">
+                    <p class="font-bold">Affirmation:</p>
+                    <p id="result-affirmation" class="italic"></p>
+                </div>
+                <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                    <button id="listen-btn" class="flex-1 flex items-center justify-center bg-purple-600 text-white font-bold py-3 px-4 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out transform hover:scale-105">
+                        <i class="fas fa-play mr-2"></i> Listen to Reading
+                    </button>
+                    <button id="reset-btn" class="flex-1 flex items-center justify-center bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-full shadow-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-300 ease-in-out transform hover:scale-105">
+                        <i class="fas fa-redo mr-2"></i> New Reading
+                    </button>
+                </div>
+                <div id="audio-container" class="mt-4 hidden">
+                    <audio id="audio-player" controls class="w-full"></audio>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom modal for error messages -->
+        <div id="error-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div class="mt-3 text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mt-2">Error</h3>
+                    <div class="mt-2 px-7 py-3">
+                        <p id="error-message" class="text-sm text-gray-500"></p>
+                    </div>
+                    <div class="items-center px-4 py-3">
+                        <button id="close-error-modal" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-full w-full shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Define global variables for Firebase configuration and app ID.
+        // These are provided by the canvas environment.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+        // Helper function to show a custom error modal
+        function showError(message) {
+            const errorModal = document.getElementById('error-modal');
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorModal.classList.remove('hidden');
+        }
+
+        // Helper function to close the error modal
+        document.getElementById('close-error-modal').addEventListener('click', () => {
+            document.getElementById('error-modal').classList.add('hidden');
+        });
+
+        // Function to reduce a number to a single digit or a master number (11, 22, 33)
+        const reduceNumber = (num) => {
+            const masterNumbers = [11, 22, 33];
+            let sum = num;
+            while (sum > 9 && !masterNumbers.includes(sum)) {
+                sum = sum.toString().split('').reduce((acc, digit) => acc + parseInt(digit, 10), 0);
+            }
+            return sum;
+        };
+        
+        // Function to check for Karmic Debt or Master numbers from a sum
+        const checkSpecialNumber = (initialSum) => {
+            const karmicDebts = [13, 14, 16, 19];
+            const masterNumbers = [11, 22, 33];
+            
+            if (masterNumbers.includes(initialSum)) {
+                return `Master Number ${initialSum}`;
+            }
+            if (karmicDebts.includes(initialSum)) {
+                return `Karmic Debt Number ${initialSum}`;
+            }
+            return null;
+        };
+
+        // Function to calculate the Life Path Number and check for special numbers
+        const calculateLifePathNumber = (dobString) => {
+            const [year, month, day] = dobString.split('-').map(Number);
+            const monthSum = month;
+            const daySum = day;
+            const yearSum = year;
+            const lifePathSum = reduceNumber(monthSum) + reduceNumber(daySum) + reduceNumber(yearSum);
+            return {
+                number: reduceNumber(lifePathSum),
+                special: checkSpecialNumber(lifePathSum)
+            };
+        };
+        
+        // Map of letters to their numerological values
+        const letterToNumberMap = {
+            'A': 1, 'J': 1, 'S': 1,
+            'B': 2, 'K': 2, 'T': 2,
+            'C': 3, 'L': 3, 'U': 3,
+            'D': 4, 'M': 4, 'V': 4,
+            'E': 5, 'N': 5, 'W': 5,
+            'F': 6, 'O': 6, 'X': 6,
+            'G': 7, 'P': 7, 'Y': 7,
+            'H': 8, 'Q': 8, 'Z': 8,
+            'I': 9, 'R': 9
+        };
+
+        // Function to calculate the Expression Number and check for special numbers
+        const calculateExpressionNumber = (name) => {
+            let sum = 0;
+            const cleanName = name.toUpperCase().replace(/[^A-Z]/g, '');
+            for (const letter of cleanName) {
+                sum += letterToNumberMap[letter] || 0;
+            }
+            return {
+                number: reduceNumber(sum),
+                special: checkSpecialNumber(sum)
+            };
+        };
+
+        // Function to calculate the Soul Urge Number and check for special numbers
+        const calculateSoulUrgeNumber = (name) => {
+            let sum = 0;
+            const vowels = ['A', 'E', 'I', 'O', 'U'];
+            const cleanName = name.toUpperCase().replace(/[^A-Z]/g, '');
+            for (const letter of cleanName) {
+                if (vowels.includes(letter)) {
+                    sum += letterToNumberMap[letter] || 0;
+                }
+                // 'Y' is sometimes a vowel, but for simplicity we will treat it as a consonant here.
+            }
+            return {
+                number: reduceNumber(sum),
+                special: checkSpecialNumber(sum)
+            };
+        };
+
+        // Base64 to ArrayBuffer helper function
+        function base64ToArrayBuffer(base64) {
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        // PCM to WAV converter helper function
+        function pcmToWav(pcm16, sampleRate) {
+            const numChannels = 1;
+            const bytesPerSample = 2;
+            const dataLength = pcm16.length * bytesPerSample;
+            const buffer = new ArrayBuffer(44 + dataLength);
+            const view = new DataView(buffer);
+            const writeString = (str) => {
+                for (let i = 0; i < str.length; i++) {
+                    view.setUint8(view.byteOffset + i, str.charCodeAt(i));
+                }
+            };
+            let offset = 0;
+
+            // RIFF header
+            writeString('RIFF'); offset += 4;
+            view.setUint32(offset, 36 + dataLength, true); offset += 4;
+            writeString('WAVE'); offset += 4;
+
+            // FMT sub-chunk
+            writeString('fmt '); offset += 4;
+            view.setUint32(offset, 16, true); offset += 4;
+            view.setUint16(offset, 1, true); offset += 2; // PCM
+            view.setUint16(offset, numChannels, true); offset += 2;
+            view.setUint32(offset, sampleRate, true); offset += 4;
+            view.setUint32(offset, sampleRate * numChannels * bytesPerSample, true); offset += 4;
+            view.setUint16(offset, numChannels * bytesPerSample, true); offset += 2;
+            view.setUint16(offset, 16, true); offset += 2; // 16-bit PCM
+
+            // DATA sub-chunk
+            writeString('data'); offset += 4;
+            view.setUint32(offset, dataLength, true); offset += 4;
+
+            for (let i = 0; i < pcm16.length; i++) {
+                view.setInt16(offset, pcm16[i], true);
+                offset += 2;
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+
+        // Function to play audio from the TTS API
+        async function playAudio(text) {
+            const listenBtn = document.getElementById('listen-btn');
+            const audioPlayer = document.getElementById('audio-player');
+            const audioContainer = document.getElementById('audio-container');
+
+            listenBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Loading Audio...`;
+            listenBtn.disabled = true;
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: `Say in a smooth, informative tone: ${text}` }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: "Kore" }
+                        }
+                    }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/L16")) {
+                    const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                    if (sampleRateMatch) {
+                        const sampleRate = parseInt(sampleRateMatch[1], 10);
+                        const pcmData = base64ToArrayBuffer(audioData);
+                        const pcm16 = new Int16Array(pcmData);
+                        const wavBlob = pcmToWav(pcm16, sampleRate);
+                        const audioUrl = URL.createObjectURL(wavBlob);
+                        
+                        audioPlayer.src = audioUrl;
+                        audioContainer.classList.remove('hidden');
+                        audioPlayer.play();
+                    } else {
+                        throw new Error("Could not parse audio sample rate from MIME type.");
+                    }
+                } else {
+                    throw new Error("Invalid audio data received from API.");
+                }
+            } catch (error) {
+                console.error("Error generating or playing audio:", error);
+                showError("Failed to generate audio reading. Please try again.");
+            } finally {
+                listenBtn.innerHTML = `<i class="fas fa-play mr-2"></i> Listen to Reading`;
+                listenBtn.disabled = false;
+            }
+        }
+
+
+        document.getElementById('numerology-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const dob = document.getElementById('dob').value;
+            const form = document.getElementById('numerology-form');
+            const loading = document.getElementById('loading');
+            const resultDiv = document.getElementById('result');
+
+            if (!name || !dob) {
+                showError("Please enter your full name and date of birth.");
+                return;
+            }
+
+            // Hide form, show loading
+            form.classList.add('hidden');
+            loading.classList.remove('hidden');
+            resultDiv.classList.add('hidden');
+
+            try {
+                const lifePath = calculateLifePathNumber(dob);
+                const expression = calculateExpressionNumber(name);
+                const soulUrge = calculateSoulUrgeNumber(name);
+                
+                // Construct a detailed prompt for the Gemini API
+                let specialNumberPrompt = '';
+                const specialNumbers = [lifePath.special, expression.special, soulUrge.special].filter(Boolean);
+                if (specialNumbers.length > 0) {
+                    specialNumberPrompt = `The reading should also provide a special, in-depth analysis of the following numbers and their impact: ${specialNumbers.join(', ')}.`;
+                }
+
+                const prompt = `You are a numerology expert. Provide a detailed numerology reading for a person named ${name}, with a Life Path Number of ${lifePath.number}, an Expression Number of ${expression.number}, and a Soul Urge Number of ${soulUrge.number}. The response should be a JSON object with the following schema: { 'title': string, 'summary': string, 'special_number_text': string, 'description': string, 'affirmation': string }. The title should include a personalized greeting like 'Your Personal Numerology Reading, Jane Doe' etc. ${specialNumberPrompt}`;
+
+                const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "title": { "type": "STRING" },
+                                "summary": { "type": "STRING" },
+                                "special_number_text": { "type": "STRING" },
+                                "description": { "type": "STRING" },
+                                "affirmation": { "type": "STRING" }
+                            },
+                            "propertyOrdering": ["title", "summary", "special_number_text", "description", "affirmation"]
+                        }
+                    }
+                };
+                
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const jsonString = result.candidates[0].content.parts[0].text;
+                    const numerologyData = JSON.parse(jsonString);
+
+                    // Update the result div with the reading
+                    document.getElementById('life-path-number').textContent = lifePath.number;
+                    document.getElementById('expression-number').textContent = expression.number;
+                    document.getElementById('soul-urge-number').textContent = soulUrge.number;
+                    document.getElementById('result-title').textContent = numerologyData.title || "Your Reading";
+                    document.getElementById('result-summary').textContent = numerologyData.summary || "No summary provided.";
+                    document.getElementById('result-description').textContent = numerologyData.description || "No description provided.";
+                    document.getElementById('result-affirmation').textContent = numerologyData.affirmation || "No affirmation provided.";
+
+                    // Handle special number insights
+                    const specialNumberInsightsDiv = document.getElementById('special-number-insights');
+                    const specialNumberText = document.getElementById('special-number-text');
+                    if (numerologyData.special_number_text) {
+                        specialNumberInsightsDiv.classList.remove('hidden');
+                        specialNumberText.textContent = numerologyData.special_number_text;
+                    } else {
+                        specialNumberInsightsDiv.classList.add('hidden');
+                    }
+
+                    // Attach listener to the listen button
+                    document.getElementById('listen-btn').onclick = () => {
+                        const readingText = `Your Life Path Number is ${lifePath.number}, Expression Number is ${expression.number}, and Soul Urge Number is ${soulUrge.number}. ${numerologyData.title}. ${numerologyData.summary}. ${numerologyData.special_number_text ? numerologyData.special_number_text : ''} ${numerologyData.description}. ${numerologyData.affirmation}.`;
+                        playAudio(readingText);
+                    };
+
+                    loading.classList.add('hidden');
+                    resultDiv.classList.remove('hidden');
+
+                } else {
+                    throw new Error("Failed to get a valid response from the API.");
+                }
+
+            } catch (error) {
+                console.error("Error fetching numerology reading:", error);
+                loading.classList.add('hidden');
+                form.classList.remove('hidden');
+                showError("Oops! Something went wrong. Please check your input and try again.");
+            }
+        });
+
+        // Event listener for the "New Reading" button
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            document.getElementById('numerology-form').classList.remove('hidden');
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('name').value = '';
+            document.getElementById('dob').value = '';
+            const audioPlayer = document.getElementById('audio-player');
+            const audioContainer = document.getElementById('audio-container');
+            audioPlayer.pause();
+            audioPlayer.src = '';
+            audioContainer.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
