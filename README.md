@@ -8,7 +8,7 @@ Welcome to my personal website! This site serves as a digital hub to showcase my
 
 ### 🌟 About This Project
 
-I built this website to serve as a comprehensive portfolio and personal introduction. As a licensed Structural Engineer (PE in Texas), I'm passionate about designing innovative and sustainable structures. The site provides a detailed look into my journey from SUNY Buffalo to Houston, my professional experience in industrial construction, and my hands-on approach to problem-solving, which extends to my love for renovating houses.
+I built this website to serve as a comprehensive portfolio and personal introduction. As a licensed Structural Engineer (PE in Texas), I'm passionate about designing innovative and sustainable structures. The site provides a detailed look into my journey in the US, my professional experience in industrial construction, and my hands-on approach to problem-solving, which extends to my love for renovating houses.
 
 This is also a space for my personal side—from my love of music and video games to my more recent (and sometimes challenging!) hobby of golf.
 
