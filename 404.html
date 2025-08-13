@@ -1,13 +1,29 @@
----
-layout: default
-title: 404 - Page not found
-permalink: /404.html
----
-
-<div class="text-center">
-  <h1>Whoops, this page doesn't exist.</h1>
-  <h1>Move along. (404 error)</h1>
-  <br/>
-
-  <img src="{{ 'images/404-southpark.jpg' | relative_url }}" alt="Not found" />
-</div>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>404 Not Found!</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <style>
+            body {
+                text-align: center;
+            }
+            div {
+                display: inline-block;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>Whoops, this page doesn't exist.</h1>
+            <h1>Move along. (404 error)</h1>
+			<h1>
+            <a href="index.html" id="read-more-link">Back to Main Page</a>
+			</h1>
+            <br/>
+            <img src="images/404-southpark.jpg" alt="Not found" />
+        </div>
+        
+    </body>
+</html>
