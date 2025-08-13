@@ -2,7 +2,7 @@
 
 Welcome to my personal website! This site serves as a digital hub to showcase my professional background, projects, and the passions that drive me both inside and outside of my career.
 
-**Live Site:** [https://trungtruong9b365b.github.io](https://trungtruong9b365b.github.io)
+**Live Site:** [https://trungtruong.com](https://trungtruong.com)
 
 ---
 
