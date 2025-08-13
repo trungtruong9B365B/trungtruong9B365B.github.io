@@ -38,6 +38,6 @@ If you'd like to run this website on your local machine, you can follow these si
 
 I'm always open to new professional connections and conversations. Feel free to reach out!
 
-* **Website:** [https://trungtruong9b365b.github.io](https://trungtruong9b365b.github.io)
+* **Website:** [https://trungtruong.com](https://trungtruong.com)
 * **LinkedIn:** [https://www.linkedin.com/in/trungtrantruong/](https://www.linkedin.com/in/trungtrantruong/)
 * **GitHub:** [https://github.com/trungtruong9b365b](https://github.com/trungtruong9b365b)
