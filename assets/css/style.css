@@ -345,3 +345,5 @@ nav { margin-left: auto; }
 /* ---------- Scroll reveal (only when JS is on) ---------- */
 .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
 .js .reveal.is-in { opacity: 1; transform: none; }
+.titleblock dd.broker { font-size: 1.15rem; }
+.titleblock--flat .titleblock__foot { flex-wrap: wrap; gap: 6px 16px; justify-content: flex-start; }
