@@ -347,3 +347,5 @@ nav { margin-left: auto; }
 .js .reveal.is-in { opacity: 1; transform: none; }
 .titleblock dd.broker { font-size: 1.15rem; }
 .titleblock--flat .titleblock__foot { flex-wrap: wrap; gap: 6px 16px; justify-content: flex-start; }
+.titleblock dd a { color: inherit; }
+.titleblock dd a.email { overflow-wrap: anywhere; }
