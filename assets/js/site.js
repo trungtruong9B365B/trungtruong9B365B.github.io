@@ -71,7 +71,7 @@
 
 	// ---- Gentle reveal on scroll ----
 	if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-		var els = document.querySelectorAll('.section__head, .about > *, .project, .hobby, .contact > *');
+		var els = document.querySelectorAll('.section__head, .about > *, .project, .mini, .toolbox, .realestate > *, .hobby, .contact > *');
 		var io = new IntersectionObserver(function (entries) {
 			entries.forEach(function (en) {
 				if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
