@@ -1,43 +1,37 @@
-# 👋 My Personal Website
+# trungtruong.com
 
-Welcome to my personal website! This site serves as a digital hub to showcase my professional background, projects, and the passions that drive me both inside and outside of my career.
+Personal website of Trung Truong, PE: structural engineer in Houston, TX.
 
-**Live Site:** [https://trungtruong.com](https://trungtruong.com)
+**Live:** [trungtruong.com](https://trungtruong.com)
 
----
+## Stack
 
-### 🌟 About This Project
+Plain HTML, CSS and a little vanilla JavaScript. No build step, no frameworks, hosted on GitHub Pages.
 
-I built this website to serve as a comprehensive portfolio and personal introduction. As a licensed Structural Engineer (PE in Texas), I'm passionate about designing innovative and sustainable structures. The site provides a detailed look into my journey in the US, my professional experience in industrial construction, and my hands-on approach to problem-solving, which extends to my love for renovating houses.
+```
+index.html            the whole site
+404.html              custom "not found" page
+favicon.svg           TT monogram (adapts to dark mode)
+assets/css/style.css  styles, light + dark theme
+assets/js/site.js     theme toggle, photo lightbox, contact form
+images/               optimized JPG + WebP images
+CNAME                 custom domain for GitHub Pages
+```
 
-This is also a space for my personal side—from my love of music and video games to my more recent (and sometimes challenging!) hobby of golf.
+The contact form posts to [Formspree](https://formspree.io).
 
-### 🛠️ Technologies Used
+## Run locally
 
-* **HTML5 & CSS3:** For the core structure and styling of the site.
-* **JavaScript:** To handle interactive elements like the "Read More" popup and the contact form logic.
-* **GitHub Pages:** The platform used for hosting this static site.
+Paths are root-relative (`/assets/...`), so serve the folder rather than opening the file directly:
 
-### 🚀 How to Run Locally
+```bash
+git clone https://github.com/trungtruong9B365B/trungtruong9b365b.github.io.git
+cd trungtruong9b365b.github.io
+python3 -m http.server 8000
+```
 
-If you'd like to run this website on your local machine, you can follow these simple steps:
+Then open http://localhost:8000.
 
-1.  Clone the repository to your local machine:
-    ```bash
-    git clone [https://github.com/trungtruong9b365b/your-repository-name.git](https://github.com/trungtruong9b365b/your-repository-name.git)
-    ```
-2.  Navigate to the project directory:
-    ```bash
-    cd your-repository-name
-    ```
-3.  Open the `index.html` file in your preferred web browser to view the site.
+## Adding a project
 
----
-
-### 📬 Let's Connect!
-
-I'm always open to new professional connections and conversations. Feel free to reach out!
-
-* **Website:** [https://trungtruong.com](https://trungtruong.com)
-* **LinkedIn:** [https://www.linkedin.com/in/trungtrantruong/](https://www.linkedin.com/in/trungtrantruong/)
-* **GitHub:** [https://github.com/trungtruong9b365b](https://github.com/trungtruong9b365b)
+Copy one of the `<article class="project">` blocks in `index.html`, then add a resized photo (about 1400px wide) to `images/work/` in both `.jpg` and `.webp`.
