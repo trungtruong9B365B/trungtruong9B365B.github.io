@@ -14,6 +14,7 @@ index.html            the whole site
 favicon.svg           TT monogram (adapts to dark mode)
 assets/css/style.css  styles, light + dark theme
 assets/js/site.js     theme toggle, photo lightbox, contact form
+assets/js/i18n.js     English / Tiếng Việt toggle and the Vietnamese translations
 images/               optimized JPG + WebP images
 CNAME                 custom domain for GitHub Pages
 ```
@@ -35,3 +36,13 @@ Then open http://localhost:8000.
 ## Adding a project
 
 Copy one of the `<article class="project">` blocks in `index.html`, then add a resized photo (about 1400px wide) to `images/work/` in both `.jpg` and `.webp`.
+
+## Editing text (English / Tiếng Việt)
+
+English text lives in `index.html`. Vietnamese lives in `assets/js/i18n.js`, keyed by the exact English text.
+If you change an English sentence in `index.html`, update its key in `i18n.js` too, or that element will stay in English.
+Elements marked `data-i18n` are translated; `alt` and `aria-label` text is looked up automatically.
+Add `?lang=vi` to a link to open the site in Vietnamese.
+
+The two "Texas Real Estate Commission …" links are required by TREC. Keep that exact wording, keep them in English,
+and keep them at 10pt (about 13.3px) or larger.

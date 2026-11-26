@@ -1,6 +1,7 @@
 (function () {
 	var root = document.documentElement;
 	root.classList.add('js');
+	var t = (window.i18n && window.i18n.t) || function (s) { return s; };
 
 	// ---- Theme toggle (follows the OS until the visitor picks one) ----
 	var toggle = document.querySelector('.theme-toggle');
@@ -11,7 +12,7 @@
 	function syncToggle() {
 		var dark = currentTheme() === 'dark';
 		toggle.setAttribute('aria-pressed', String(dark));
-		toggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+		toggle.setAttribute('aria-label', t(dark ? 'Switch to light mode' : 'Switch to dark mode'));
 	}
 	toggle.addEventListener('click', function () {
 		var next = currentTheme() === 'dark' ? 'light' : 'dark';
@@ -20,6 +21,7 @@
 		syncToggle();
 	});
 	mq.addEventListener && mq.addEventListener('change', syncToggle);
+	document.addEventListener('langchange', syncToggle);
 	syncToggle();
 
 	// ---- Footer year ----
@@ -49,7 +51,7 @@
 		form.addEventListener('submit', function (e) {
 			e.preventDefault();
 			status.className = 'form__status';
-			status.textContent = 'Sending…';
+			status.textContent = t('Sending…');
 			submit.disabled = true;
 			fetch(form.action, {
 				method: 'POST',
@@ -59,10 +61,10 @@
 				if (!res.ok) throw new Error(res.status);
 				form.reset();
 				status.classList.add('is-ok');
-				status.textContent = 'Thanks! Your message is on its way. I’ll get back to you soon.';
+				status.textContent = t('Thanks! Your message is on its way. I’ll get back to you soon.');
 			}).catch(function () {
 				status.classList.add('is-err');
-				status.innerHTML = 'Something went wrong. Please email me at <a href="mailto:mail@trungtruong.com">mail@trungtruong.com</a>.';
+				status.innerHTML = t('Something went wrong. Please email me at') + ' <a href="mailto:mail@trungtruong.com">mail@trungtruong.com</a>.';
 			}).finally(function () {
 				submit.disabled = false;
 			});

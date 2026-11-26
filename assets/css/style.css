@@ -269,8 +269,6 @@ nav { margin-left: auto; }
 .realestate { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 72px); align-items: start; }
 .realestate__note { font-size: 0.9rem; color: var(--muted); border-left: 2px solid var(--accent); padding-left: 12px; }
 .titleblock--flat { transform: none; justify-self: stretch; max-width: none; }
-.titleblock--flat .titleblock__foot { margin: 0; }
-.titleblock--flat .titleblock__foot a { color: var(--ink); }
 @media (max-width: 820px) { .realestate { grid-template-columns: 1fr; } }
 
 /* ---------- Hobbies ---------- */
@@ -323,7 +321,6 @@ nav { margin-left: auto; }
 .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 28px; font-size: 0.9rem; color: var(--muted); }
 .footer p { margin: 0; }
 .footer__legal { display: grid; gap: 4px; }
-.footer__legal a { color: var(--muted); font-size: 0.85rem; }
 .footer__legal a:hover { color: var(--accent); }
 .social { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
 .social a { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius); color: var(--ink-2); }
@@ -346,6 +343,25 @@ nav { margin-left: auto; }
 .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
 .js .reveal.is-in { opacity: 1; transform: none; }
 .titleblock dd.broker { font-size: 1.15rem; }
-.titleblock--flat .titleblock__foot { flex-wrap: wrap; gap: 6px 16px; justify-content: flex-start; }
 .titleblock dd a { color: inherit; }
 .titleblock dd a.email { overflow-wrap: anywhere; }
+
+/* TREC-required links: full "Texas Real Estate Commission" wording, kept at
+   15px (about 11pt), above TREC's 10-point minimum. Don't shrink these. */
+.trec-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.trec-links a { font-family: var(--font); font-size: 0.9375rem; line-height: 1.4; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.trec-links a:hover { color: var(--accent); }
+.titleblock--flat .trec-links { padding: 12px 14px; }
+.footer__legal { gap: 10px; }
+
+/* ---------- Language toggle ---------- */
+.lang-toggle { display: flex; flex: none; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.lang-toggle button {
+	min-width: 40px; height: 38px; padding: 0 8px; border: 0; background: transparent; cursor: pointer;
+	font: 500 0.78rem/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+}
+.lang-toggle button + button { border-left: 1px solid var(--line); }
+.lang-toggle button:hover { color: var(--ink); background: var(--paper-2); }
+.lang-toggle button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+@media (max-width: 720px) { nav { margin-left: auto; } .topbar__inner { gap: 10px; } }
+@media (max-width: 400px) { .brand__name { display: none; } }
